@@ -7,6 +7,16 @@ Written for x86 machines, using SFML.
 
 ## BUILD
 
+I have only tested this on ubuntu and do not know how it will behave on other systems.
+
+SFML is not packaged with the distribution and must be installed on your system.
+
+Make sure you have the required dependencies:
+```
+sudo apt update
+sudo apt install g++ build-essential libsfml-dev
+```
+
 To build, run `make`. The executable will be in the `dist/` directory.
 
 To run: `./dist/mandelbrot`
