@@ -28,9 +28,11 @@ void Mandelbrot::updateSet(sf::Vector2<double> xBounds,
   std::cout << "Y Bounds: " << yBounds.x << " to " << yBounds.y << std::endl;
   std::cout << "Dimensions: " << dimensions.x << " x " << dimensions.y
             << std::endl;
-  double xScale = static_cast<double>(abs(xBounds.y - xBounds.x)) /
+  double xYminusXmin = std::abs(xBounds.y - xBounds.x);
+  std::cout << "X Range: " << xYminusXmin << std::endl;
+  double xScale = static_cast<double>(std::abs(xBounds.y - xBounds.x)) /
                   static_cast<double>(dimensions.x);
-  double yScale = static_cast<double>(abs(yBounds.y - yBounds.x)) /
+  double yScale = static_cast<double>(std::abs(yBounds.y - yBounds.x)) /
                   static_cast<double>(dimensions.y);
   std::cout << "X Scale: " << xScale << ", Y Scale: " << yScale << std::endl;
 

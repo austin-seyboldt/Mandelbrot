@@ -13,7 +13,7 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(dimensions.x, dimensions.y),
                           "Mandelbrot", sf::Style::Default);
 
-  std::string fileName = "Default_Hue.png";
+  std::string fileName = "ColorScheme_10.png";
   Graph mainGraph(dimensions, sf::Vector2<double>(-2, 2), Complex(0, 0),
                   fileName);
 

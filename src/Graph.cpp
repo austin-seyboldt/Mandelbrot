@@ -7,7 +7,8 @@ Graph::Graph(sf::Vector2i dimensions, sf::Vector2<double> xBounds,
   zoomSpeed = DEFAULT_ZOOM_SPEED;
   zoomLvl = 1;
   zoomFactor = 1;
-  float dimensionRatio = 1.0 * dimensions.y / dimensions.x;
+  // this use to be a float?
+  double dimensionRatio = 1.0 * dimensions.y / dimensions.x;
   this->xBounds = xBounds;
   this->origin.real = origin.real;
   this->origin.imaginary = origin.imaginary;
@@ -34,7 +35,7 @@ Graph::Graph(sf::Vector2i dimensions, sf::Vector2<double> xBounds,
   zoomSpeed = DEFAULT_ZOOM_SPEED;
   zoomLvl = 1;
   zoomFactor = 1;
-  float dimensionRatio = 1.0 * dimensions.y / dimensions.x;
+  double dimensionRatio = 1.0 * dimensions.y / dimensions.x;
   this->xBounds = xBounds;
   this->origin.real = origin.real;
   this->origin.imaginary = origin.imaginary;
@@ -91,36 +92,48 @@ void Graph::create(sf::Vector2i dimensions, sf::Vector2<double> xBounds,
 void Graph::setCameraOrigin(Complex origin) { this->origin = origin; }
 
 void Graph::setCameraOrigin(sf::Vector2i mousePosition) {
+  std::cout << "Setting camera origin to mouse position: " << mousePosition.x
+            << ", " << mousePosition.y << std::endl;
   origin.real =
       xBounds.x + (((xBounds.y - xBounds.x) / dimensions.x) * mousePosition.x);
   origin.imaginary =
       yBounds.x + (((yBounds.y - yBounds.x) / dimensions.y) * mousePosition.y);
-  double xChange = abs(xBounds.y - xBounds.x) / 2;
-  double yChange = abs(yBounds.y - yBounds.x) / 2;
+  double xChange = std::abs(xBounds.y - xBounds.x) / 2.0;
+  double yChange = std::abs(yBounds.y - yBounds.x) / 2.0;
+
+  std::cout << "X Change: " << xChange << ", Y Change: " << yChange
+            << std::endl;
+  std::cout << "New Origin: " << origin.real << " + " << origin.imaginary << "i"
+            << std::endl;
+
   xBounds.x = origin.real - xChange;
   xBounds.y = origin.real + xChange;
   yBounds.x = origin.imaginary - yChange;
   yBounds.y = origin.imaginary + yChange;
+
+  std::cout << "New X Bounds: " << xBounds.x << " to " << xBounds.y
+            << std::endl;
+  std::cout << "New Y Bounds: " << yBounds.x << "i to " << yBounds.y << "i"
+            << std::endl;
 }
 
 // Find a better way of representing zoom!!
 void Graph::incZoom() {
   ++zoomLvl;
   zoomFactor += zoomSpeed;
-  double xChange = abs((xBounds.y - xBounds.x) / 2 / zoomFactor);
-  double yChange = abs((yBounds.y - yBounds.x) / 2 / zoomFactor);
+  double xChange = std::abs((xBounds.y - xBounds.x) / 2 / zoomFactor);
+  double yChange = std::abs((yBounds.y - yBounds.x) / 2 / zoomFactor);
   xBounds.x = origin.real - xChange;
   xBounds.y = origin.real + xChange;
   yBounds.x = origin.imaginary - yChange;
   yBounds.y = origin.imaginary + yChange;
 }
 
-// Fix this shit too
 void Graph::decZoom() {
   --zoomLvl;
   zoomFactor -= zoomSpeed;
-  double xChange = abs((xBounds.y - xBounds.x) / 2 * zoomFactor);
-  double yChange = abs((yBounds.y - yBounds.x) / 2 * zoomFactor);
+  double xChange = std::abs((xBounds.y - xBounds.x) / 2 * zoomFactor);
+  double yChange = std::abs((yBounds.y - yBounds.x) / 2 * zoomFactor);
   xBounds.x = origin.real - xChange;
   xBounds.y = origin.real + xChange;
   yBounds.x = origin.imaginary - yChange;
